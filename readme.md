@@ -1,12 +1,17 @@
+## Disclaimer
+
+I have forked this project for my own testing. \
+Original project @ https://github.com/devopsjourney1/jenkins-101
+
 
 ## YouTube Link
-For the full 1 hour course watch out youtube:
+Greate resource on Jenkins. Credit goes to Brad from https://www.youtube.com/@DevOpsJourney \
 https://www.youtube.com/watch?v=6YZvp2GwT0A
 
 # Installation
 ## Build the Jenkins BlueOcean Docker Image
 ```
-docker build -t myjenkins-blueocean:2.332.3-1 .
+docker build -t myjenkins:latest .
 ```
 
 ## Create the network 'jenkins'
@@ -15,27 +20,15 @@ docker network create jenkins
 ```
 
 ## Run the Container
-### MacOS / Linux
 ```
 docker run --name jenkins-blueocean --restart=on-failure --detach \
-  --network jenkins --env DOCKER_HOST=tcp://docker:2376 \
-  --env DOCKER_CERT_PATH=/certs/client --env DOCKER_TLS_VERIFY=1 \
-  --publish 8080:8080 --publish 50000:50000 \
-  --volume jenkins-data:/var/jenkins_home \
-  --volume jenkins-docker-certs:/certs/client:ro \
-  myjenkins-blueocean:2.332.3-1
+--network jenkins --env DOCKER_HOST=tcp://docker:2376 \
+--env DOCKER_CERT_PATH=/certs/client --env DOCKER_TLS_VERIFY=1 \
+--publish 8080:8080 --publish 50000:50000 \
+--volume jenkins-data:/var/jenkins_home \
+--volume jenkins-docker-certs:/certs/client:ro \
+myjenkins:latest
 ```
-
-### Windows
-```
-docker run --name jenkins-blueocean --restart=on-failure --detach `
-  --network jenkins --env DOCKER_HOST=tcp://docker:2376 `
-  --env DOCKER_CERT_PATH=/certs/client --env DOCKER_TLS_VERIFY=1 `
-  --volume jenkins-data:/var/jenkins_home `
-  --volume jenkins-docker-certs:/certs/client:ro `
-  --publish 8080:8080 --publish 50000:50000 myjenkins-blueocean:2.332.3-1
-```
-
 
 ## Get the Password
 ```
@@ -59,7 +52,7 @@ docker run -d --restart=always -p 127.0.0.1:2376:2375 --network jenkins -v /var/
 docker inspect <container_id> | grep IPAddress
 ```
 
-## Using my Jenkins Python Agent
+## Using Jenkins Python Agent
 ```
-docker pull devopsjourney1/myjenkinsagents:python
+docker pull samimunir25/jenkins-python-agent:latest
 ```
